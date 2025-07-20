@@ -1,3 +1,5 @@
+#1
+
 def greedy_coin_change(coins, amount):
     coins.sort(reverse=True)
     count = 0
@@ -25,3 +27,30 @@ amount = 12
 print(greedy_coin_change(coins, amount))  #חמדני
 
 print(dp_coin_change(coins, amount))  #אופטימלי
+
+
+
+#2
+
+def minimize_penalty(w, L):
+    n = len(w)
+    dp = [float('inf')] * (n + 1)
+    dp[n] = 0  
+
+    for i in range(n - 1, -1, -1):
+        line_length = 0
+        for j in range(i, n):
+            line_length += w[j]
+            if j > i:
+                line_length += 1
+            if line_length > L:
+                break
+            penalty = L - line_length
+            dp[i] = min(dp[i], penalty + dp[j + 1])
+
+    return dp[0]
+    
+    
+w = [3, 2, 2, 5]
+L = 6
+print(minimize_penalty(w, L))
